@@ -113,11 +113,11 @@ export default class Parallax extends React.Component<IProps, IState> {
             return (
                 <StaticDiv
                     style={{
-                        ...style
+                        ...style,
                     }}
                     className={className}
                 >
-                    <StaticImg src={staticFallback}/>
+                    <StaticImg src={staticFallback} />
                 </StaticDiv>
             );
         } else {
