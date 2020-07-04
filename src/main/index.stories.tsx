@@ -21,3 +21,10 @@ export const Primary = () => (
         }}
     />
 );
+
+export const Static = () => (
+    <Parallax layers={[]} isStatic={true} staticFallback={'https://i.imgur.com/DiWkFKd.png'} style={{
+        width: '320px',
+        height: '500px',
+    }}/>
+);

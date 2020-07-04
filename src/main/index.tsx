@@ -6,6 +6,7 @@ import { ShadowDiv } from './components/shadowDiv';
 import { LayersDiv } from './components/layersDiv';
 import { RenderedLayer } from './components/renderedLayer';
 import { ShineDiv } from './components/shineDiv';
+import { StaticDiv, StaticImg } from './components/static';
 
 export default class Parallax extends React.Component<IProps, IState> {
     state: IState = {
@@ -33,7 +34,7 @@ export default class Parallax extends React.Component<IProps, IState> {
     }
     handleMove = ({ pageX, pageY }) => {
         const { rootElemWidth, rootElemHeight } = this.state;
-        const { layers } = this.props;
+        const { layers = [] } = this.props;
         const layersCount = layers.length;
         const bodyScrollTop = document.body.scrollTop || document.getElementsByTagName('html')[0].scrollTop;
         const bodyScrollLeft = document.body.scrollLeft;
@@ -106,38 +107,52 @@ export default class Parallax extends React.Component<IProps, IState> {
         />
     );
     render() {
-        const { style = {}, isStatic = false, className = '' } = this.props;
+        const { style = {}, isStatic = false, className = '', staticFallback = '' } = this.props;
         const { container } = this.state;
-        return (
-            <RootDiv
-                ref={this.rootRef}
-                rootElemWidth={this.state.rootElemWidth}
-                style={{
-                    ...style,
-                }}
-                className={className}
-                onMouseMove={(event: React.MouseEvent) => {
-                    this.handleMove({
-                        pageX: event.pageX,
-                        pageY: event.pageY,
-                    });
-                }}
-                onMouseEnter={this.handleEnter}
-                onMouseLeave={this.handleLeave}
-                onTouchMove={this.handleTouchMove}
-                onTouchStart={this.handleEnter}
-                onTouchEnd={this.handleLeave}
-            >
-                <InnerDiv
+        if (isStatic) {
+            return (
+                <StaticDiv
                     style={{
-                        ...container,
+                        ...style
                     }}
+                    className={className}
                 >
-                    {this.renderShadow()}
-                    {this.renderLayers()}
-                    {this.renderShine()}
-                </InnerDiv>
-            </RootDiv>
-        );
+                    <StaticImg src={staticFallback}/>
+                </StaticDiv>
+            );
+        } else {
+            return (
+                <RootDiv
+                    ref={this.rootRef}
+                    rootElemWidth={this.state.rootElemWidth}
+                    style={{
+                        ...style,
+                    }}
+                    className={className}
+                    onMouseMove={(event: React.MouseEvent) => {
+                        this.handleMove({
+                            pageX: event.pageX,
+                            pageY: event.pageY,
+                        });
+                    }}
+                    onMouseEnter={this.handleEnter}
+                    onMouseLeave={this.handleLeave}
+                    onTouchMove={this.handleTouchMove}
+                    onTouchStart={this.handleEnter}
+                    onTouchEnd={this.handleLeave}
+                    data-testid="root-div"
+                >
+                    <InnerDiv
+                        style={{
+                            ...container,
+                        }}
+                    >
+                        {this.renderShadow()}
+                        {this.renderLayers()}
+                        {this.renderShine()}
+                    </InnerDiv>
+                </RootDiv>
+            );
+        }
     }
 }
