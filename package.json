@@ -1,0 +1,95 @@
+{
+  "version": "1.0.0",
+  "main": "build/index.js",
+  "module": "build/index.esm.js",
+  "files": [
+    "build"
+  ],
+  "types": "build/index.d.ts",
+  "description": "apple tv parallax",
+  "scripts": {
+    "build": "rollup -c",
+    "lint": "eslint '*/**/*.{js,ts,tsx}' --quiet --fix",
+    "test": "jest",
+    "test:watch": "jest --watch",
+    "storybook": "start-storybook -p 6006",
+    "storybook:export": "build-storybook",
+    "prepublishOnly": "npm run build",
+    "format": "prettier --write src/**/*.{ts,tsx}"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/dreamsparkx/apple-tv-parallax.git"
+  },
+  "keywords": [
+    "React",
+    "Component",
+    "Library",
+    "Rollup",
+    "Typescript",
+    "Sass",
+    "Storybook",
+    "Apple",
+    "TV",
+    "Apple TV",
+    "Parallax"
+  ],
+  "author": "Gaurav Bharti",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/dreamsparkx/apple-tv-parallax/issues"
+  },
+  "homepage": "https://github.com/dreamsparkx/apple-tv-parallax",
+  "peerDependencies": {
+    "react": ">=16.8.0",
+    "react-dom": ">=16.8.0"
+  },
+  "devDependencies": {
+    "@babel/core": "^7.10.4",
+    "@rollup/plugin-commonjs": "^13.0.0",
+    "@rollup/plugin-image": "^2.0.5",
+    "@rollup/plugin-node-resolve": "^8.1.0",
+    "@storybook/react": "^5.3.19",
+    "@testing-library/jest-dom": "^5.11.0",
+    "@testing-library/react": "^10.4.3",
+    "@types/jest": "^26.0.3",
+    "@types/react": "^16.9.41",
+    "@types/react-dom": "^16.9.8",
+    "@types/styled-components": "^5.1.0",
+    "@typescript-eslint/eslint-plugin": "^3.5.0",
+    "@typescript-eslint/parser": "^3.5.0",
+    "babel-loader": "^8.1.0",
+    "babel-preset-react-app": "^9.1.2",
+    "eslint": "^7.3.1",
+    "eslint-config-prettier": "^6.11.0",
+    "eslint-plugin-prettier": "^3.1.4",
+    "eslint-plugin-react": "^7.20.3",
+    "husky": "^4.2.5",
+    "identity-obj-proxy": "^3.0.0",
+    "jest": "^26.1.0",
+    "lint-staged": "^10.2.11",
+    "node-sass": "^4.14.1",
+    "prettier": "^2.0.5",
+    "react": "^16.13.1",
+    "react-dom": "^16.13.1",
+    "rollup": "^2.18.2",
+    "rollup-plugin-copy": "^3.3.0",
+    "rollup-plugin-peer-deps-external": "^2.2.3",
+    "rollup-plugin-postcss": "^3.1.2",
+    "rollup-plugin-typescript2": "^0.27.1",
+    "sass-loader": "^9.0.0",
+    "styled-components": "^5.1.1",
+    "ts-jest": "^26.1.1",
+    "typescript": "^3.9.6"
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "lint-staged"
+    }
+  },
+  "lint-staged": {
+    "./src/*.{js,jsx,ts,tsx}": [
+      "eslint --fix"
+    ]
+  }
+}
