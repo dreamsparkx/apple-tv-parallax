@@ -6,7 +6,6 @@ import { ShadowDiv } from './components/shadowDiv';
 import { LayersDiv } from './components/layersDiv';
 import { RenderedLayer } from './components/renderedLayer';
 import { ShineDiv } from './components/shineDiv';
-import { StaticDiv, StaticImg } from './components/static';
 
 export default class Parallax extends React.Component<IProps, IState> {
     state: IState = {
@@ -33,8 +32,11 @@ export default class Parallax extends React.Component<IProps, IState> {
         }
     }
     handleMove = ({ pageX, pageY }) => {
+        const { layers = [], isStatic = false } = this.props;
+        if (isStatic) {
+            return;
+        }
         const { rootElemWidth, rootElemHeight } = this.state;
-        const { layers = [] } = this.props;
         const layersCount = layers.length;
         const bodyScrollTop = document.body.scrollTop || document.getElementsByTagName('html')[0].scrollTop;
         const bodyScrollLeft = document.body.scrollLeft;
@@ -69,9 +71,17 @@ export default class Parallax extends React.Component<IProps, IState> {
         });
     };
     handleEnter = () => {
+        const { isStatic = false } = this.props;
+        if (isStatic) {
+            return;
+        }
         this.setState({ isOnHover: true });
     };
     handleLeave = () => {
+        const { isStatic = false } = this.props;
+        if (isStatic) {
+            return;
+        }
         this.setState({
             isOnHover: false,
             container: {},
@@ -81,6 +91,10 @@ export default class Parallax extends React.Component<IProps, IState> {
     };
     handleTouchMove = (evt: React.TouchEvent<HTMLDivElement>) => {
         evt.preventDefault();
+        const { isStatic = false } = this.props;
+        if (isStatic) {
+            return;
+        }
         const { pageX, pageY } = evt.touches[0];
         this.handleMove({ pageX, pageY });
     };
@@ -107,52 +121,39 @@ export default class Parallax extends React.Component<IProps, IState> {
         />
     );
     render() {
-        const { style = {}, isStatic = false, className = '', staticFallback = '' } = this.props;
+        const { style = {}, isStatic = false, className = '' } = this.props;
         const { container } = this.state;
-        if (isStatic) {
-            return (
-                <StaticDiv
+        return (
+            <RootDiv
+                ref={this.rootRef}
+                rootElemWidth={this.state.rootElemWidth}
+                style={{
+                    ...style,
+                }}
+                className={className}
+                onMouseMove={(event: React.MouseEvent) => {
+                    this.handleMove({
+                        pageX: event.pageX,
+                        pageY: event.pageY,
+                    });
+                }}
+                onMouseEnter={this.handleEnter}
+                onMouseLeave={this.handleLeave}
+                onTouchMove={this.handleTouchMove}
+                onTouchStart={this.handleEnter}
+                onTouchEnd={this.handleLeave}
+                data-testid="root-div"
+            >
+                <InnerDiv
                     style={{
-                        ...style,
+                        ...container,
                     }}
-                    className={className}
                 >
-                    <StaticImg src={staticFallback} />
-                </StaticDiv>
-            );
-        } else {
-            return (
-                <RootDiv
-                    ref={this.rootRef}
-                    rootElemWidth={this.state.rootElemWidth}
-                    style={{
-                        ...style,
-                    }}
-                    className={className}
-                    onMouseMove={(event: React.MouseEvent) => {
-                        this.handleMove({
-                            pageX: event.pageX,
-                            pageY: event.pageY,
-                        });
-                    }}
-                    onMouseEnter={this.handleEnter}
-                    onMouseLeave={this.handleLeave}
-                    onTouchMove={this.handleTouchMove}
-                    onTouchStart={this.handleEnter}
-                    onTouchEnd={this.handleLeave}
-                    data-testid="root-div"
-                >
-                    <InnerDiv
-                        style={{
-                            ...container,
-                        }}
-                    >
-                        {this.renderShadow()}
-                        {this.renderLayers()}
-                        {this.renderShine()}
-                    </InnerDiv>
-                </RootDiv>
-            );
-        }
+                    {this.renderShadow()}
+                    {this.renderLayers()}
+                    {this.renderShine()}
+                </InnerDiv>
+            </RootDiv>
+        );
     }
 }
