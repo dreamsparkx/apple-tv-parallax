@@ -1,7 +1,6 @@
 export interface IProps {
     layers?: string[];
     isStatic?: boolean;
-    staticFallback?: string;
     className?: string;
     style?: any;
 }
