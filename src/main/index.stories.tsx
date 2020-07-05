@@ -24,4 +24,24 @@ storiesOf('Parallax', module)
                 height: '500px',
             })}
         />
+    ))
+    .add('Static', () => (
+        <Parallax
+            isStatic={true}
+            layers={array(
+                'layers',
+                [
+                    'https://i.imgur.com/G2zsxeD.png',
+                    'https://i.imgur.com/HZmIEdK.png',
+                    'https://i.imgur.com/dp50zpz.png',
+                    'https://i.imgur.com/DiWkFKd.png',
+                    'https://i.imgur.com/LwojbKJ.png',
+                ],
+                ',',
+            )}
+            style={object('style', {
+                width: '320px',
+                height: '500px',
+            })}
+        />
     ));
