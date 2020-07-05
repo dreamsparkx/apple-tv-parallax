@@ -1,7 +1,6 @@
 import React from 'react';
 import { storiesOf } from '@storybook/react';
-import { action } from '@storybook/addon-actions';
-import { withKnobs, text, select, array, object, boolean } from '@storybook/addon-knobs';
+import { withKnobs, array, object, boolean } from '@storybook/addon-knobs';
 import Parallax from './index';
 
 storiesOf('Parallax', module)
