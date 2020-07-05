@@ -15,7 +15,8 @@
     "storybook": "start-storybook -p 6006",
     "storybook:export": "build-storybook -s public",
     "prepublishOnly": "npm run build",
-    "format": "prettier --write src/**/*.{ts,tsx}"
+    "format": "prettier --write src/**/*.{ts,tsx}",
+    "deploy-storybook": "storybook-to-ghpages --ci"
   },
   "repository": {
     "type": "git",
@@ -50,6 +51,7 @@
     "@rollup/plugin-image": "^2.0.5",
     "@rollup/plugin-node-resolve": "^8.1.0",
     "@storybook/react": "^5.3.19",
+    "@storybook/storybook-deployer": "^2.8.6",
     "@testing-library/jest-dom": "^5.11.0",
     "@testing-library/react": "^10.4.3",
     "@types/jest": "^26.0.3",
@@ -91,5 +93,10 @@
     "./src/*.{js,jsx,ts,tsx}": [
       "eslint --fix"
     ]
+  },
+  "storybook-deployer": {
+    "gitUsername": "dreamsparkx",
+    "gitEmail": "dreamsparks@outlook.com",
+    "commitMessage": "Deploy Storybook to GitHub Pages [ci skip]"
   }
 }
