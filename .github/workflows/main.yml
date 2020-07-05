@@ -42,6 +42,26 @@ jobs:
         run: npm run test
       - name: Run Build
         run: npm run build
+  release:
+    name: Semantic Release
+    runs-on: ubuntu-latest
+    if: ${{ github.ref == 'refs/heads/master' }}
+    needs: build
+    steps:
+      - uses: actions/checkout@v2
+        with:
+          ref: ${{ github.ref }}
+      - name: Setup Node
+        uses: actions/setup-node@v1
+      - name: Install dependencies
+        run: npm install
+      - name: Run Build
+        run: npm run build
+      - name: Release
+        run: npm run semantic-release
+        env:
+          GITHUB_TOKEN: ${{ secrets.GH_TOKEN }}
+          NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
   deploy:
     name: Deploy
     runs-on: ubuntu-latest
