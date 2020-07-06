@@ -10,13 +10,13 @@
   "description": "apple tv parallax",
   "scripts": {
     "build": "rollup -c",
-    "lint": "eslint '*/**/*.{js,ts,tsx}' --quiet --fix",
+    "lint": "eslint 'src/**/*.{js,ts,tsx}' --quiet --fix",
     "test": "jest",
     "test:watch": "jest --watch",
     "storybook": "start-storybook -p 6006",
     "storybook:export": "build-storybook -s public",
     "prepublishOnly": "npm run build",
-    "format": "prettier --write 'src/**/*.{ts,tsx}'",
+    "format": "prettier --write 'src/**/*.{ts,tsx,js}'",
     "deploy-storybook": "storybook-to-ghpages --ci",
     "semantic-release": "semantic-release",
     "commit": "git-cz"
@@ -102,7 +102,7 @@
   },
   "lint-staged": {
     "./src/*.{js,jsx,ts,tsx}": [
-      "prettier --write 'src/**/*.{ts,tsx}'", "eslint --fix"
+      "prettier --write 'src/**/*.{ts,tsx,js}'", "eslint 'src/**/*.{js,ts,tsx}' --fix"
     ]
   },
   "storybook-deployer": {
