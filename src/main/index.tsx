@@ -121,7 +121,7 @@ export default class Parallax extends React.Component<IProps, IState> {
         />
     );
     render() {
-        const { style = {}, isStatic = false, className = '' } = this.props;
+        const { style = {}, className = '' } = this.props;
         const { container } = this.state;
         return (
             <RootDiv
