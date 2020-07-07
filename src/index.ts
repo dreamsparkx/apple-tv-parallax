@@ -1,3 +1,3 @@
 import Parallax from './main';
 
-export { Parallax };
+export { Parallax }; //
