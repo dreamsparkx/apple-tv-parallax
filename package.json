@@ -101,10 +101,15 @@
     }
   },
   "lint-staged": {
-    "./src/*.{js,jsx,ts,tsx}": [
+    "src/**/*.{js,jsx,ts,tsx}": [
       "npm run format",
       "npm run lint"
     ]
+  },
+  "config": {
+    "commitizen": {
+      "path": "./node_modules/cz-conventional-changelog"
+    }
   },
   "storybook-deployer": {
     "gitUsername": "dreamsparkx",
@@ -115,11 +120,6 @@
     "branches": [
       "master"
     ]
-  },
-  "config": {
-    "commitizen": {
-      "path": "./node_modules/cz-conventional-changelog"
-    }
   },
   "publishConfig": {
     "access": "public"
