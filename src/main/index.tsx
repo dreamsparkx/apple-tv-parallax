@@ -1,4 +1,4 @@
-import React, { createRef } from 'react';
+import React, { useRef, useState, useEffect } from 'react';
 import { IState, IProps } from './index.types';
 import { RootDiv } from './components/rootDiv';
 import { InnerDiv } from './components/innerDiv';
@@ -7,40 +7,59 @@ import { LayersDiv } from './components/layersDiv';
 import { RenderedLayer } from './components/renderedLayer';
 import { ShineDiv } from './components/shineDiv';
 
-export default class Parallax extends React.Component<IProps, IState> {
-    state: IState = {
+const Parallax: React.FunctionComponent<IProps> = (props: IProps) => {
+    const { layers = [], isStatic = false, className = '', style = {} } = props;
+    const [state, setState] = useState<IState>({
         rootElemWidth: 0,
         rootElemHeight: 0,
         isOnHover: false,
         container: {},
         shine: {},
         layers: [],
-    };
-    private rootRef = createRef<HTMLDivElement>();
-    componentDidMount(): void {
-        if (!this.props.isStatic) {
-            this.setState({
+    });
+    const rootRef = useRef<HTMLDivElement | null>(null);
+    useEffect(() => {
+        if (!isStatic) {
+            setState({
+                ...state,
                 rootElemWidth:
-                    this.rootRef.current.clientWidth ||
-                    this.rootRef.current.offsetWidth ||
-                    this.rootRef.current.scrollWidth,
+                    rootRef.current.clientWidth || rootRef.current.offsetWidth || rootRef.current.scrollWidth,
                 rootElemHeight:
-                    this.rootRef.current.clientHeight ||
-                    this.rootRef.current.offsetHeight ||
-                    this.rootRef.current.scrollHeight,
+                    rootRef.current.clientHeight || rootRef.current.offsetHeight || rootRef.current.scrollHeight,
             });
         }
-    }
-    handleMove = ({ pageX, pageY }) => {
-        const { layers = [], isStatic = false } = this.props;
+    }, []);
+    const renderShine = () => (
+        <ShineDiv
+            style={{
+                background: state.shine.background,
+            }}
+        />
+    );
+    const renderShadow = () => <ShadowDiv isOnHover={state.isOnHover} />;
+    const renderLayers = () => (
+        <LayersDiv>
+            {layers &&
+                layers.map((imgSrc: string, idx: number) => (
+                    <RenderedLayer
+                        url={imgSrc}
+                        key={idx}
+                        style={{
+                            ...(state.layers[idx] ? state.layers[idx] : {}),
+                        }}
+                    />
+                ))}
+        </LayersDiv>
+    );
+    const handleMove = ({ pageX, pageY }) => {
         if (isStatic) {
             return;
         }
-        const { rootElemWidth, rootElemHeight } = this.state;
+        const { rootElemWidth, rootElemHeight } = state;
         const layersCount = layers.length;
         const bodyScrollTop = document.body.scrollTop || document.getElementsByTagName('html')[0].scrollTop;
         const bodyScrollLeft = document.body.scrollLeft;
-        const offsets = this.rootRef.current.getBoundingClientRect();
+        const offsets = rootRef.current.getBoundingClientRect();
         const wMultiple = 320 / rootElemWidth;
         const offsetX = 0.52 - (pageX - offsets.left - bodyScrollLeft) / rootElemWidth; // cursor position X
         const offsetY = 0.52 - (pageY - offsets.top - bodyScrollTop) / rootElemHeight; // cursor position Y
@@ -51,11 +70,12 @@ export default class Parallax extends React.Component<IProps, IState> {
         const arad = Math.atan2(dy, dx); // angle between cursor and center of container in RAD
         const rawAngle = (arad * 180) / Math.PI - 90; // convert rad to degrees
         const angle = rawAngle < 0 ? rawAngle + 360 : rawAngle;
-        this.setState({
+        setState({
+            ...state,
             container: {
                 transform:
                     `rotateX(${xRotate}deg) rotateY(${yRotate}deg)` +
-                    (this.state.isOnHover ? ' scale3d(1.07,1.07,1.07)' : ''),
+                    (state.isOnHover ? ' scale3d(1.07,1.07,1.07)' : ''),
             },
             shine: {
                 background: `linear-gradient(${angle}deg, rgba(255, 255, 255, ${
@@ -63,97 +83,70 @@ export default class Parallax extends React.Component<IProps, IState> {
                 }) 0%, rgba(255, 255, 255, 0) 80%)`,
                 transform: `translateX(${offsetX * layersCount - 0.1}px) translateY(${offsetY * layersCount - 0.1}px)`,
             },
-            layers: this.props.layers.map((_, idx) => ({
+            layers: layers.map((_, idx) => ({
                 transform: `translateX(${offsetX * (layersCount - idx) * ((idx * 2.5) / wMultiple)}px) translateY(${
                     offsetY * layersCount * ((idx * 2.5) / wMultiple)
                 }px)`,
             })),
         });
     };
-    handleEnter = () => {
-        const { isStatic = false } = this.props;
+    const handleEnter = () => {
         if (isStatic) {
             return;
         }
-        this.setState({ isOnHover: true });
+        setState({ ...state, isOnHover: true });
     };
-    handleLeave = () => {
-        const { isStatic = false } = this.props;
+    const handleLeave = () => {
         if (isStatic) {
             return;
         }
-        this.setState({
+        setState({
+            ...state,
             isOnHover: false,
             container: {},
             shine: {},
             layers: [],
         });
     };
-    handleTouchMove = (evt: React.TouchEvent<HTMLDivElement>) => {
+    const handleTouchMove = (evt: React.TouchEvent<HTMLDivElement>) => {
         evt.preventDefault();
-        const { isStatic = false } = this.props;
         if (isStatic) {
             return;
         }
         const { pageX, pageY } = evt.touches[0];
-        this.handleMove({ pageX, pageY });
+        handleMove({ pageX, pageY });
     };
-    renderShadow = () => <ShadowDiv isOnHover={this.state.isOnHover} />;
-    renderLayers = () => (
-        <LayersDiv>
-            {this.props.layers &&
-                this.props.layers.map((imgSrc: string, idx: number) => (
-                    <RenderedLayer
-                        url={imgSrc}
-                        key={idx}
-                        style={{
-                            ...(this.state.layers[idx] ? this.state.layers[idx] : {}),
-                        }}
-                    />
-                ))}
-        </LayersDiv>
-    );
-    renderShine = () => (
-        <ShineDiv
+    return (
+        <RootDiv
+            ref={rootRef}
+            rootElemWidth={state.rootElemWidth}
             style={{
-                background: this.state.shine.background,
+                ...style,
             }}
-        />
-    );
-    render() {
-        const { style = {}, className = '' } = this.props;
-        const { container } = this.state;
-        return (
-            <RootDiv
-                ref={this.rootRef}
-                rootElemWidth={this.state.rootElemWidth}
+            className={className}
+            data-testid="root-div"
+            onMouseMove={(event: React.MouseEvent) => {
+                handleMove({
+                    pageX: event.pageX,
+                    pageY: event.pageY,
+                });
+            }}
+            onMouseEnter={handleEnter}
+            onMouseLeave={handleLeave}
+            onTouchMove={handleTouchMove}
+            onTouchStart={handleEnter}
+            onTouchEnd={handleLeave}
+        >
+            <InnerDiv
                 style={{
-                    ...style,
+                    ...state.container,
                 }}
-                className={className}
-                onMouseMove={(event: React.MouseEvent) => {
-                    this.handleMove({
-                        pageX: event.pageX,
-                        pageY: event.pageY,
-                    });
-                }}
-                onMouseEnter={this.handleEnter}
-                onMouseLeave={this.handleLeave}
-                onTouchMove={this.handleTouchMove}
-                onTouchStart={this.handleEnter}
-                onTouchEnd={this.handleLeave}
-                data-testid="root-div"
             >
-                <InnerDiv
-                    style={{
-                        ...container,
-                    }}
-                >
-                    {this.renderShadow()}
-                    {this.renderLayers()}
-                    {this.renderShine()}
-                </InnerDiv>
-            </RootDiv>
-        );
-    }
-}
+                {renderShadow()}
+                {renderLayers()}
+                {renderShine()}
+            </InnerDiv>
+        </RootDiv>
+    );
+};
+export default Parallax;

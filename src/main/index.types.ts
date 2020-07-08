@@ -1,15 +1,17 @@
+import { CSSProperties } from 'react';
+
 export interface IProps {
     layers?: string[];
     isStatic?: boolean;
     className?: string;
-    style?: any;
+    style?: CSSProperties;
 }
 
 export interface IState {
     rootElemWidth: number;
     rootElemHeight: number;
     isOnHover: boolean;
-    container: any;
-    shine: any;
-    layers: any[];
+    container: CSSProperties;
+    shine: CSSProperties;
+    layers: CSSProperties[];
 }
