@@ -14,7 +14,7 @@
     "test": "jest",
     "test:watch": "jest --watch",
     "storybook": "start-storybook -p 6006",
-    "build-storybook": "build-storybook -s public",
+    "build-storybook": "build-storybook",
     "prepublishOnly": "npm run build",
     "format": "prettier --write 'src/**/*.{ts,tsx,js}'",
     "deploy-storybook": "storybook-to-ghpages --ci",
