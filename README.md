@@ -1,6 +1,7 @@
 # apple-tv-parallax
 
-[![Dependency Status](https://david-dm.org/dreamsparkx/apple-tv-parallax.svg)](https://david-dm.org/dreamsparkx/apple-tv-parallax)  [![semantic-release](https://img.shields.io/badge/%20%20%F0%9F%93%A6%F0%9F%9A%80-semantic--release-e10079.svg)](https://github.com/semantic-release/semantic-release) ![Apple TV Parallax](https://github.com/dreamsparkx/apple-tv-parallax/workflows/Apple%20TV%20Parallax/badge.svg) ![npm](https://img.shields.io/npm/v/@dreamsparkx/parallax/latest.svg)
+[![Dependency Status](https://david-dm.org/dreamsparkx/apple-tv-parallax.svg)](https://david-dm.org/dreamsparkx/apple-tv-parallax) [![FOSSA Status](https://app.fossa.com/api/projects/git%2Bgithub.com%2Fdreamsparkx%2Fapple-tv-parallax.svg?type=shield)](https://app.fossa.com/projects/git%2Bgithub.com%2Fdreamsparkx%2Fapple-tv-parallax?ref=badge_shield)
+ [![semantic-release](https://img.shields.io/badge/%20%20%F0%9F%93%A6%F0%9F%9A%80-semantic--release-e10079.svg)](https://github.com/semantic-release/semantic-release) ![Apple TV Parallax](https://github.com/dreamsparkx/apple-tv-parallax/workflows/Apple%20TV%20Parallax/badge.svg) ![npm](https://img.shields.io/npm/v/@dreamsparkx/parallax/latest.svg)
 
 <!-- [![CircleCI](https://circleci.com/gh/dreamsparkx/apple-tv-parallax.svg?style=svg)](https://circleci.com/gh/dreamsparkx/apple-tv-parallax) -->
 Live Demo: https://dreamsparkx.github.io/apple-tv-parallax/
@@ -34,3 +35,7 @@ import { Parallax } from '@dreamsparkx/parallax';
 ```
 
 ![](https://raw.githubusercontent.com/dreamsparkx/apple-tv-parallax/master/extra/gifs/example.gif)
+
+
+## License
+[![FOSSA Status](https://app.fossa.com/api/projects/git%2Bgithub.com%2Fdreamsparkx%2Fapple-tv-parallax.svg?type=large)](https://app.fossa.com/projects/git%2Bgithub.com%2Fdreamsparkx%2Fapple-tv-parallax?ref=badge_large)
