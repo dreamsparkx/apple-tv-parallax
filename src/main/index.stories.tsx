@@ -1,47 +1,27 @@
 import React from 'react';
-import { storiesOf } from '@storybook/react';
-import { withKnobs, array, object, boolean } from '@storybook/addon-knobs';
+import { Story, Meta } from '@storybook/react/types-6-0';
 import Parallax from './index';
+import { IProps } from './index.types';
 
-storiesOf('Parallax', module)
-    .addDecorator(withKnobs)
-    .add('Default', () => (
-        <Parallax
-            isStatic={boolean('isStatic', false)}
-            layers={array(
-                'layers',
-                [
-                    'https://i.imgur.com/G2zsxeD.png',
-                    'https://i.imgur.com/HZmIEdK.png',
-                    'https://i.imgur.com/dp50zpz.png',
-                    'https://i.imgur.com/DiWkFKd.png',
-                    'https://i.imgur.com/LwojbKJ.png',
-                ],
-                ',',
-            )}
-            style={object('style', {
-                width: '320px',
-                height: '500px',
-            })}
-        />
-    ))
-    .add('Static', () => (
-        <Parallax
-            isStatic={true}
-            layers={array(
-                'layers',
-                [
-                    'https://i.imgur.com/G2zsxeD.png',
-                    'https://i.imgur.com/HZmIEdK.png',
-                    'https://i.imgur.com/dp50zpz.png',
-                    'https://i.imgur.com/DiWkFKd.png',
-                    'https://i.imgur.com/LwojbKJ.png',
-                ],
-                ',',
-            )}
-            style={object('style', {
-                width: '320px',
-                height: '500px',
-            })}
-        />
-    ));
+export default {
+    title: 'Apple TV/Parallax',
+    component: Parallax,
+} as Meta;
+
+const Template: Story<IProps> = (args) => <Parallax {...args} />;
+
+export const Default = Template.bind({});
+Default.args = {
+    isStatic: false,
+    style: {
+        width: '320px',
+        height: '500px',
+    },
+    layers: [
+        'https://i.imgur.com/G2zsxeD.png',
+        'https://i.imgur.com/HZmIEdK.png',
+        'https://i.imgur.com/dp50zpz.png',
+        'https://i.imgur.com/DiWkFKd.png',
+        'https://i.imgur.com/LwojbKJ.png',
+    ],
+};
