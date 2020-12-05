@@ -83,6 +83,7 @@
     "prettier": "^2.0.5",
     "react": "^16.14.0",
     "react-dom": "^16.14.0",
+    "react-is": "^16.13.1",
     "require-context.macro": "^1.2.2",
     "rollup": "^2.33.3",
     "rollup-plugin-copy": "^3.3.0",
