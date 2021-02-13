@@ -32,7 +32,7 @@ import { Parallax } from '@dreamsparkx/parallax';
 />;
 ```
 
-![](https://raw.githubusercontent.com/dreamsparkx/apple-tv-parallax/master/extra/gifs/example.gif)
+![](./extra/gifs/example.gif)
 
 ## License
 
